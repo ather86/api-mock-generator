@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Product API
+  version: 1.0.0
+
+paths:
+  /products:
+    get:
+      summary: Get product list
+      parameters:
+        - name: category
+          in: query
+          description: Product category
+          required: true
+          schema:
+            type: string
+            enum: [electronics, books, fashion]
+        - name: X-Auth-Token
+          in: header
+          description: API token
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        price:
+                          type: number
+                          format: float

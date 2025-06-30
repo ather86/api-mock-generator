@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Complex API
+  version: 1.0.0
+paths:
+  /orders:
+    get:
+      summary: Get all orders
+      responses:
+        '200':
+          description: A list of orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order_id:
+                          type: string
+                        customer:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            email:
+                              type: string
+                              format: email
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              product_id:
+                                type: string
+                              name:
+                                type: string
+                              quantity:
+                                type: integer
+                              price:
+                                type: number
+                        status:
+                          type: string
+                          enum: [pending, shipped, delivered, cancelled]
+                        is_paid:
+                          type: boolean
+                        created_at:
+                          type: string
+                          format: date-time

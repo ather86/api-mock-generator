@@ -1,0 +1,88 @@
+
+openapi: 3.0.0
+info:
+  title: Sample Enhanced API
+  version: 1.0.0
+paths:
+  /orders:
+    get:
+      summary: Get all orders
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        order_id:
+                          type: string
+                        created_at:
+                          type: string
+                          format: date-time
+                        status:
+                          type: string
+                          enum: [start, end, processing]
+                        is_paid:
+                          type: boolean
+                        customer:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            email:
+                              type: string
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              product_id:
+                                type: string
+                              name:
+                                type: string
+                              quantity:
+                                type: integer
+                              price:
+                                type: number
+                                format: float
+    post:
+      summary: Create a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewOrder'
+      responses:
+        '201':
+          description: Order created successfully
+
+components:
+  schemas:
+    NewOrder:
+      type: object
+      properties:
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: string
+              quantity:
+                type: integer
